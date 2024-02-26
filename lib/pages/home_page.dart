@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_to_do_app/data/database.dart';
 import 'package:flutter_application_to_do_app/utils/dialog_box.dart';
+import 'package:flutter_application_to_do_app/utils/edit_dialog_box.dart';
 import 'package:flutter_application_to_do_app/utils/todo_tile.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -45,6 +46,15 @@ class _HomePageState extends State<HomePage> {
     db.updateDataBase();
   }
 
+  void updateTask(int index) {
+    setState(() {
+      db.toDoList[index][0] = _controller.text;
+      _controller.clear();
+    });
+    Navigator.of(context).pop();
+    db.updateDataBase();
+  }
+
   void createNewTask() {
     showDialog(
       context: context,
@@ -52,6 +62,21 @@ class _HomePageState extends State<HomePage> {
         return DialogBox(
           controller: _controller,
           onSave: saveNewTask,
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
+    );
+  }
+
+  void editTask(int index) {
+    // print(db.toDoList.elementAt(index)[0]);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return EditDialogBox(
+          taskIndex: index,
+          controller: _controller,
+          onSave: () => updateTask(index),
           onCancel: () => Navigator.of(context).pop(),
         );
       },
@@ -89,6 +114,7 @@ class _HomePageState extends State<HomePage> {
             taskName: db.toDoList[index][0],
             taskComplete: db.toDoList[index][1],
             onChanged: (value) => checkBoxChange(value, index),
+            editFunction: (context) => editTask(index),
             deleteFunction: (context) => deleteTask(index),
           );
         },

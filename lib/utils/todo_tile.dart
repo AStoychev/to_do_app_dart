@@ -8,6 +8,7 @@ class ToDoTile extends StatelessWidget {
   final bool taskComplete;
   Function(bool?)? onChanged;
   Function(BuildContext)? deleteFunction;
+  Function(BuildContext)? editFunction;
 
   ToDoTile({
     super.key,
@@ -15,6 +16,7 @@ class ToDoTile extends StatelessWidget {
     required this.taskComplete,
     required this.onChanged,
     required this.deleteFunction,
+    required this.editFunction,
   });
 
   @override
@@ -25,6 +27,12 @@ class ToDoTile extends StatelessWidget {
         endActionPane: ActionPane(
           motion: StretchMotion(),
           children: [
+            SlidableAction(
+              onPressed: editFunction,
+              icon: Icons.edit,
+              backgroundColor: Colors.blue.shade300,
+              borderRadius: BorderRadius.circular(12),
+            ),
             SlidableAction(
               onPressed: deleteFunction,
               icon: Icons.delete,
