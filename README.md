@@ -9,9 +9,6 @@ This is my To Do mobile application. Developed with Flutter.
  ![](https://github.com/AStoychev/to_do_app_dart/blob/master/lib/images/ToDo%20one.jpg)
 
 
-
-
-
  **Complete Task**
  
  ![](https://github.com/AStoychev/to_do_app_dart/blob/master/lib/images/ToDo%20two.png)
